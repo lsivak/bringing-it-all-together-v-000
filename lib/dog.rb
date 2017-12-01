@@ -28,8 +28,10 @@ def self.create(name:, breed:)
   dog
 end
 
+
 def find_or_create_by(name:, breed:)
-  dog = DB[:conn].execute("SELECT * FROM dogs WHERE name = ?, AND breed = ?", name, breed)
+  sql = ("SELECT * FROM dogs WHERE name = ?, AND breed = ?", name, breed)
+  dog = DB[:conn].execute(sql)[0]
   if !dog.empty?
     dog_info = dog[0]
     dog = Dog.new(id: dog_info[0], name: dog_info[1], breed: dog_info[3])
@@ -37,6 +39,15 @@ def find_or_create_by(name:, breed:)
     dog = self.create(name: name, breed: breed)
 end
 end
+# def find_or_create_by(name:, breed:)
+#   dog = DB[:conn].execute("SELECT * FROM dogs WHERE name = ?, AND breed = ?", name, breed)
+#   if !dog.empty?
+#     dog_info = dog[0]
+#     dog = Dog.new(id: dog_info[0], name: dog_info[1], breed: dog_info[3])
+#   else
+#     dog = self.create(name: name, breed: breed)
+# end
+# end
 
 def self.find_by_name(name)
   sql = <<-SQL
