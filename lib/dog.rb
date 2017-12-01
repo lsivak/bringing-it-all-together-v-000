@@ -30,7 +30,7 @@ def self.create(name:, breed:)
 end
 
 
-def find_or_create_by(name:, breed:)
+def self.find_or_create_by(name:, breed:)
     binding.pry
   dog = DB[:conn].execute("SELECT * FROM dogs WHERE name = ?, AND breed = ?", name, breed)
   if !dog.empty?
