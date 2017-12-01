@@ -38,6 +38,7 @@ def self.find_or_create_by(name:, breed:)
   else
     dog = self.create(name: name, breed: breed)
 end
+dog
 end
 
 def self.find_by_name(name)
